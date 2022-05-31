@@ -1,0 +1,4 @@
+Words in text: 3
+Number of unique words in text: 3
+Length of shortest word: 3
+Length of longest word: 6
