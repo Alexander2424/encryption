@@ -235,22 +235,6 @@ def common_letter(text1):
 	for key, value in store[:1]:
 		print(str(value) + ": " + str(key))
 
-""" For part 3 use:
-f = open('metrics.txt', 'r')
-content = f.read()
-print(content)
-f.close()
-
-and copy ecryption/decryption function, replacing input(manual...) 
-with encrypt = input(What file to open? (.txt))
-
-and then use f = open(encrypt, 'r')
-encrypt = f.read()
-
-and write f.close() at the end of the function to close file.
-
-Also change encrypt2.py to have extra if/elifs to let them choose manual
-or read from file """
 
 	
 
