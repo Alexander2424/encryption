@@ -3,7 +3,7 @@ from cipher_functions import encryption, decryption
 # file
 
 print("\nThis program will encrypt/decrypt input messages.")
-print("Enter 'exit' to end and exit the program.")
+print("Enter 'exit' to exit the program.")
 
 # looping the option to encrypt or decrypt until user chooses to exit
 while(True):
