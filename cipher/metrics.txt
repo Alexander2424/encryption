@@ -1,4 +1,6 @@
 Words in text: 3
-Number of unique words in text: 3
-Length of shortest word: 3
-Length of longest word: 6
+Number of unique words in text: 1
+Length of shortest word: 4
+Length of longest word: 4
+Most common word: test (3)
+Most common letter: t (6)
