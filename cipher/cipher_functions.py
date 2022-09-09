@@ -141,8 +141,8 @@ def analysis(result):
 		"\nNumber of unique words: " + str(unique_words) +
 		"\nShortest word has " + str(short_word) + " letters." +
 		"\nLongest word has " + str(long_word) + " letters." +
-		"\nMost common word: \n" + str(one_word) +
-		"\nMost common letter: \n" + str(one_letter))
+		"\nMost common word: " + str(one_word) +
+		"\nMost common letter: " + str(one_letter))
 	
 
 	write_to_file(text_length, unique_words, short_word, long_word, one_word,
@@ -215,5 +215,5 @@ def write_to_file(length, unique, min_, max_, com_word, com_letter):
 		m.write("Words in text: " + str(length) +
     	"\nNumber of unique words in text: " + str(unique) +
     	"\nLength of shortest word: " + str(min_) + "\nLength of longest word: " 
-    	+ str(max_) + "\nMost common word: \n" + str(com_word) + 
-		"\nMost common letter: \n" + str(com_letter))
+    	+ str(max_) + "\nMost common word: " + str(com_word) + 
+		"\nMost common letter: " + str(com_letter))
