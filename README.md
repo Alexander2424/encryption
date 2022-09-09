@@ -11,3 +11,5 @@ The program performs the following text analysis:
   * Number of unique words
   * Length of shortest word
   * Length of longest word
+  * Most common word (including frequency)
+  * Most common letter (including frequency)
