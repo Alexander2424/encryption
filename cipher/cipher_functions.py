@@ -1,13 +1,10 @@
+# Importing libraries for random integer generation and punctuation management.
 from random import randint
 import re
-# Importing external libraries to be used for random integer and to remove punct
-# -uation
 
-
-# This function performs the encryption. It uses other functions defined in
-# this module to perform the other specific requirements. It takes the encryptio
-# -n input and converts to ASCII values, performs sum to encrypt and then return
-# -s encrypted value.
+# Function to perform encryption by converting text to ASCII values and 
+# changing the ASCII value by the random integer generated. Random int is
+# printed so the user can decrypt the encrypted output.
 def encryption(number_list, encrypted_list):
 	active = True
 	while(active):
@@ -16,23 +13,23 @@ def encryption(number_list, encrypted_list):
 			+ "\n")
 		encrypt_list = list(encrypt)
 		
-		if encrypt == '-':
+		if encrypt == '':
 			active = False
 			# this 'flag' allows user to exit
 
 		else:
-			rotation = input("Please enter the rotation value.\n"
-				+ "(enter ' ' for random rotation)\n" + "->")
+			rotation = input("Please enter the rotation value (1-25).\n"
+				+ "(Press enter for random rotation)\n" + ">>>")
 			# storing the rotation value and giving option for random rotation
-			if rotation == ' ':
+			if rotation == '':
 				rotation = randint(1,25)
 				print("Random rotation is: " + str(rotation))
 			else:
 				rotation = int(rotation)
 
-			# calculating the encryption using ASCII values:	
+			# Performing the encryption using ASCII values:	
 			for letter in encrypt_list:
-				# for capital letters between 65-90
+				# for capital letters between ASCII value 65-90
 				if ord(letter) >= 65 and ord(letter) <= 90:
 					if ord(letter) + rotation > 90:
 						changed = ord(letter) - 26 + rotation
@@ -42,8 +39,7 @@ def encryption(number_list, encrypted_list):
 						number_list.append(changed)
 
 				elif ord(letter) >= 97 and ord(letter) <= 122:
-					# converting lowercase (97-122) to UPPER case as required 
-					# in spec.
+					# converting lowercase (97-122) to UPPER case
 					if ord(letter) + rotation > 122:
 						changed = ord(letter) - 26 + rotation - 32
 						number_list.append(changed)
@@ -51,31 +47,29 @@ def encryption(number_list, encrypted_list):
 						changed = ord(letter) + rotation - 32
 						number_list.append(changed)
 
-				# following conditional maintains that punctuation are unchanged
+				# Ensure non-letters (i.e., punctuation) is unchanged
 				else:
-					changed = ord(letter)
-					number_list.append(changed)
+					number_list.append(ord(letter))
 			
-			# converting ASCII values back to letters	
+			# converting ASCII values back from numbers to letters	
 			for number in number_list:
-				changed_back = chr(number)
-				encrypted_list.append(changed_back)
+				encrypted_list.append(chr(number))
 
 			# compiling encrypted_list back into a string for output
 			encrypted = ''.join(encrypted_list)
 			print("\n" + encrypted + "\n")
 
-			# result argument initialised as original (english) input so it 
-			# can perform analysis on original text
-			analysis(result=encrypt)
+			# Perform analysis on original unencrypted text
+			analysis(encrypt)
 
 			active = False
 
 
-# This function performs the decryption. It takes the decryption input and conv
-# -erts to ASCII values, performs sum to decrypt and then returns encrypted valu
-# -e.
+# Function to perform decryption by converting encrypted text to ASCII values 
+# changing the ASCII value by the input integer. If the input integer matches
+# the integer used in the encryption, the text will be decrypted.
 def decryption(number_list, decrypted_list):
+	# Inverse functional logic compared to 'encryption' function
 	active = True
 	while(active):
 
@@ -83,13 +77,13 @@ def decryption(number_list, decrypted_list):
 			+ "\n")
 		decrypt_list = list(decrypt)
 
-		if decrypt == '-':
+		if decrypt == '':
 			active = False
 
 		else:
 			rotation = input("Please enter the rotation value.\n"
-				+ "(enter ' ' for random rotation)\n" + "->")
-			if rotation == ' ':
+				+ "(Press Enter for random rotation)\n" + "->")
+			if rotation == '':
 				rotation = randint(1,25)
 				print("Random rotation is: " + str(rotation))
 			else:
@@ -120,50 +114,42 @@ def decryption(number_list, decrypted_list):
 			decrypted = ''.join(decrypted_list)
 			print("\n" + decrypted + "\n")
 
-			# this time result is initialised as the decrypted output (english 
-			# text)
-			analysis(result=decrypted)
+			# Perform analysis on the decrypted output text
+			analysis(decrypted)
 
 			active = False
 
 
-# this function uses the 're' imported library to extract punctuation, idea to
-# use this function was found on stackexchange
+# Using the 're' library to extract punction in text
 def remove_punc(text):
 	return re.compile('\w+').findall(text)
 
 
-# analysis function performs the analytic tasks required and is called to
-# encryption and decryption functions. 
+# analysis function to output: number of words, number of unique words, 
+# shortest word length, longest word length
 def analysis(result):
-	result_list = remove_punc(text=result)
+	result_list = remove_punc(result)
 
 	text_length = len(result_list)
-	print("Number of words: " + str(text_length))
-
 	unique_words = len(set(result_list))
-	print("Number of unique words: " + str(unique_words))
+	short_word = min_length(result_list)
+	long_word = max_length(result_list)
+	one_word = common_word(result_list)
+	one_letter = common_letter(result_list)
 
-	short_word = min_length(list1=result_list)
-	print("Shortest word has " + str(short_word) + " letters.")
-
-	long_word = max_length(list2=result_list)
-	print("Longest word has " + str(long_word) + " letters.")
-
-	write_to_file(length=text_length, unique=unique_words, min_=short_word,
-		max_=long_word)
-
-	ten_common(list3=result_list)
-
-	common_letter(text1=result_list)
-
-
-
-
+	print("Number of words: " + str(text_length) + 
+		"\nNumber of unique words: " + str(unique_words) +
+		"\nShortest word has " + str(short_word) + " letters." +
+		"\nLongest word has " + str(long_word) + " letters." +
+		"\nMost common word: \n" + str(one_word) +
+		"\nMost common letter: \n" + str(one_letter))
 	
 
-# this function returns the length of the shortest word and is called in analysi
-# -s
+	write_to_file(text_length, unique_words, short_word, long_word, one_word,
+		one_letter)
+
+
+# Function to determine the length of the shortest word
 def min_length(list1):
 
 	min = sorted(list1, key=len)
@@ -172,7 +158,7 @@ def min_length(list1):
 	return shortest_value
 
 
-# this function returns the length of the longest word
+# Function to determine length of the longest word
 def max_length(list2):
 
 	max = sorted(list2, key=len, reverse=True)
@@ -181,22 +167,10 @@ def max_length(list2):
 	return longest_value
 
 
-# this function writes the stats to file metrics.txt
-def write_to_file(length, unique, min_, max_):
-
-	with open('metrics.txt', 'w') as m:
-		m.write("Words in text: " + str(length) +
-    	"\nNumber of unique words in text: " + str(unique) +
-    	"\nLength of shortest word: " + str(min_) + "\nLength of longest word: " 
-    	+ str(max_))
-
-
-# function to print the 10 most common words, making value-key tuples and then
-# printing in order using sort
-def ten_common(list3):
+# Function to print the 10 most common words
+def common_word(list3):
 
 	counts = dict()
-
 	for word in list3:
 		if word not in counts:
 			counts[word] = 1
@@ -209,12 +183,11 @@ def ten_common(list3):
 
 	store.sort(reverse=True)
 
-	for key, value in store[:10]:
-	    print(str(value) + ": " + str(key))
+	for key, value in store[:1]:
+	    return(str(value) + " (" + str(key) + ")")
 
 
-# function for finding most common letter, using same logic as ten_common
-
+# Function for finding most common letter
 def common_letter(text1):
 
 	text2 = ''.join(text1)
@@ -233,43 +206,14 @@ def common_letter(text1):
 	store.sort(reverse=True)
 
 	for key, value in store[:1]:
-		print(str(value) + ": " + str(key))
+		return(str(value) + " (" + str(key) + ")")
 
+# Function to output analysis to file metrics.txt
+def write_to_file(length, unique, min_, max_, com_word, com_letter):
 
-	
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	with open('metrics.txt', 'w') as m:
+		m.write("Words in text: " + str(length) +
+    	"\nNumber of unique words in text: " + str(unique) +
+    	"\nLength of shortest word: " + str(min_) + "\nLength of longest word: " 
+    	+ str(max_) + "\nMost common word: \n" + str(com_word) + 
+		"\nMost common letter: \n" + str(com_letter))
